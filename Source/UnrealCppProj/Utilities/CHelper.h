@@ -18,4 +18,17 @@ public:
 		verifyf(!!obj, L"!!asset");
 		*outObject = obj;
 	}
+
+	template<typename  T> static void CreateComponent(AActor* inActor, T** inComponent, FName inName, USceneComponent* inParent = NULL)
+	{
+		*inComponent = inActor->CreateDefaultSubobject<T>(inName);
+
+		if (!!inParent)
+		{
+			(*inComponent)->SetupAttachment(inParent);
+			return;
+		}
+
+		inActor->SetRootComponent(*inComponent);
+	}
 };
