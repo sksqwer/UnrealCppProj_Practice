@@ -2,6 +2,7 @@
 
 #include "CPlayer.h"
 #include "global.h"
+#include "CAnimInstance.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Camera/CameraComponent.h"
@@ -33,6 +34,10 @@ ACPlayer::ACPlayer()
 	GetMesh()->SetRelativeLocation(FVector(0.0f, 0.0f, -90.0f));
 	GetMesh()->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 
+	TSubclassOf<UAnimInstance> animInstance;
+	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/AnimBP_CPlayer.AnimBP_CPlayer_C'");
+	GetMesh()->SetAnimInstanceClass(animInstance);
+
 	SpringArm->SetRelativeLocation((FVector(0, 0, 60)));
 	SpringArm->TargetArmLength = 200.0f;
 	SpringArm->bDoCollisionTest = false;
@@ -63,8 +68,8 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("MoveRight", this, &ACPlayer::OnMoveRight);
 	PlayerInputComponent->BindAxis("HorizontalLook", this, &ACPlayer::OnHorizontalLook);
 	PlayerInputComponent->BindAxis("VerticalLook", this, &ACPlayer::OnVerticalLook);
-
-
+	PlayerInputComponent->BindAction("Running", EInputEvent::IE_Pressed, this, &ACPlayer::OnRunning);
+	PlayerInputComponent->BindAction("Running", EInputEvent::IE_Released, this, &ACPlayer::OffRunning);
 }
 
 void ACPlayer::OnMoveForward(float Axis)
@@ -91,6 +96,16 @@ void ACPlayer::OnVerticalLook(float Axis)
 {
 	AddControllerPitchInput(Axis);
 
+}
+
+void ACPlayer::OnRunning()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+}
+
+void ACPlayer::OffRunning()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
 }
 
 
