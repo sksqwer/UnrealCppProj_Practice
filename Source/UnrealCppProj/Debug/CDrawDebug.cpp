@@ -28,10 +28,8 @@ void ACDrawDebug::BeginPlay()
 {
 	Super::BeginPlay();
 
-	for(int32 i = 0; i < 5; i++)
-	{
+	for (int32 i = 0; i < 5; i++)
 		Location[i] = InitLocation[i] + GetActorLocation();
-	}
 
 	DrawDebugBox(GetWorld(), Location[0] + Box.GetCenter(), Box.GetExtent(), FColor::Red, true);
 	
@@ -41,5 +39,28 @@ void ACDrawDebug::BeginPlay()
 void ACDrawDebug::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	for (int32 i = 0; i < 5; i++)
+		Location[i] = InitLocation[i] + GetActorLocation();
+
+	DrawDebugSolidBox(GetWorld(), Location[0], Box.GetExtent(), FColor::Blue);
+
+	//DrawDebugPoint(GetWorld(), Location[1], 100, FColor::Black);
+
+	DrawDebugSphere(GetWorld(), Location[2], 100, 10, FColor::Green);
+
+	DrawDebugCircle(GetWorld(), Location[3], 100, 50, FColor::Silver);
+
+	DrawDebugLine(GetWorld(), Location[2], Location[3], FColor::Magenta, false, -1, 0, 10);
+
+	FVector location = Location[1];
+	location.X += 100;
+	location.Z += 100;
+	location.Y += sin(GetWorld()->GetTimeSeconds() * 3.0f) * 300.0f;
+
+	DrawDebugPoint(GetWorld(), location, 100, FColor::Yellow);
+
+	DrawDebugDirectionalArrow(GetWorld(), location, Location[3], 100, FColor::Emerald);
+
 }
 
