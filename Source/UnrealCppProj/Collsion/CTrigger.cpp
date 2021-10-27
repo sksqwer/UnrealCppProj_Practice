@@ -19,7 +19,7 @@ ACTrigger::ACTrigger()
 	Box->bHiddenInGame = false;
 
 	Text->SetRelativeLocation(FVector(0, 0, 100));
-	Text->SetRelativeRotation(FRotator(0, 0, -180));
+	Text->SetRelativeRotation(FRotator(0, 0, 0));
 	Text->SetRelativeScale3D(FVector(2));
 	Text->TextRenderColor = FColor::Red;
 	Text->HorizontalAlignment = EHorizTextAligment::EHTA_Center;
@@ -44,7 +44,7 @@ void ACTrigger::ActorBeginOverlap(AActor* overlappedActor, AActor* OtherActor)
 
 void ACTrigger::ActorEndOverlap(AActor* overlappedActor, AActor* OtherActor)
 {
-	//if (OnBoxLightBeginOverlap.IsBound())
-		//OnBoxLightBeginOverlap.;
+	if (OnBoxLightEndOverlap.IsBound())
+		OnBoxLightEndOverlap.Execute();
 }
 

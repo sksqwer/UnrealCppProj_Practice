@@ -29,4 +29,13 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+private:
+	UFUNCTION()
+		void OnLight();
+
+	UFUNCTION()
+		void OffLight();
+
+
+
 };

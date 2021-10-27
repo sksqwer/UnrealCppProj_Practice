@@ -6,7 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "CTrigger.generated.h"
 
-DECLARE_DELEGATE(FBoxLightBeingOverlap);
+DECLARE_DELEGATE(FBoxLightBeginOverlap);
+DECLARE_DELEGATE(FBoxLightEndOverlap);
 
 UCLASS()
 class UNREALCPPPROJ_API ACTrigger : public AActor
@@ -40,5 +41,6 @@ private:
 		void ActorEndOverlap(AActor* overlappedActor, AActor* OtherActor);
 
 public:
-	FBoxLightBeingOverlap		OnBoxLightBeginOverlap;
+	FBoxLightBeginOverlap		OnBoxLightBeginOverlap;
+	FBoxLightEndOverlap			OnBoxLightEndOverlap;
 };

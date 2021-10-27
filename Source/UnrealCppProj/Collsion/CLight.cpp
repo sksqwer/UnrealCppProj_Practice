@@ -3,6 +3,7 @@
 
 #include "CLight.h"
 #include "global.h"
+#include "CTrigger.h"
 #include "Components/BoxComponent.h"
 #include "Components/PointLightComponent.h"
 #include "Components/TextRenderComponent.h"
@@ -16,14 +17,14 @@ ACLight::ACLight()
 
 	
 	Text->SetRelativeLocation(FVector(0, 0, 100));
-	Text->SetRelativeRotation(FRotator(0, 0, -180));
+	Text->SetRelativeRotation(FRotator(0, 0, 0));
 	Text->SetRelativeScale3D(FVector(2));
 	Text->TextRenderColor = FColor::Red;
 	Text->HorizontalAlignment = EHorizTextAligment::EHTA_Center;
 	Text->Text = FText::FromString(GetName());
 
-	Light->Intensity = 1e+4f;
-	Light->AttenuationRadius = 200;
+	Light->Intensity = 1e+5f;
+	Light->AttenuationRadius = 2000;
 	Light->LightColor = FColor(255, 128, 50);
 }
 
@@ -32,5 +33,25 @@ void ACLight::BeginPlay()
 {
 	Super::BeginPlay();
 	Light->SetVisibility(false);
-	
+
+	TArray<AActor*> actors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ACTrigger::StaticClass(), actors);
+
+	CheckFalse(actors.Num() > 0);
+
+	ACTrigger* trigger = Cast<ACTrigger>(actors[0]);
+	trigger->OnBoxLightBeginOverlap.BindUFunction(this, "OnLight");
+	trigger->OnBoxLightEndOverlap.BindUFunction(this, "OffLight");
+
+
+}
+
+void ACLight::OnLight()
+{
+	Light->SetVisibility(true);
+}
+
+void ACLight::OffLight()
+{
+	Light->SetVisibility(false);
 }
