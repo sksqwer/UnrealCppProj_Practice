@@ -23,6 +23,9 @@ private:
 		class UPointLightComponent* Light;
 
 	UPROPERTY(VisibleDefaultsOnly)
+		class UPointLightComponent* Light2;
+
+	UPROPERTY(VisibleDefaultsOnly)
 		class UTextRenderComponent* Text;
 
 protected:
@@ -35,6 +38,9 @@ private:
 
 	UFUNCTION()
 		void OffLight();
+
+	UFUNCTION()
+		FString OnRandomLight(FLinearColor Incolor);
 
 
 

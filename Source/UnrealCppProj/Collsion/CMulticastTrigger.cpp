@@ -1,15 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
-#include "CTrigger.h"
 #include "global.h"
 #include "Components/BoxComponent.h"
 #include "Components/TextRenderComponent.h"
+#include "CMulticastTrigger.h"
 #include "Kismet/KismetArrayLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
 
 // Sets default values
-ACTrigger::ACTrigger()
+ACMulticastTrigger::ACMulticastTrigger()
 {
 	CHelpers::CreateComponent<USceneComponent>(this, &Scene, "Scene");
 	CHelpers::CreateComponent<UBoxComponent>(this, &Box, "Box", Scene);
@@ -26,41 +25,37 @@ ACTrigger::ACTrigger()
 	Text->TextRenderColor = FColor::Red;
 	Text->HorizontalAlignment = EHorizTextAligment::EHTA_Center;
 	Text->Text = FText::FromString(GetName());
-
 }
 
 // Called when the game starts or when spawned
-void ACTrigger::BeginPlay()
+void ACMulticastTrigger::BeginPlay()
 {
 	Super::BeginPlay();
 
-	OnActorBeginOverlap.AddDynamic(this, &ACTrigger::ActorBeginOverlap);
-	OnActorEndOverlap.AddDynamic(this, &ACTrigger::ActorEndOverlap);
+	OnActorBeginOverlap.AddDynamic(this, &ACMulticastTrigger::ActorBeginOverlap);
+	OnActorEndOverlap.AddDynamic(this, &ACMulticastTrigger::ActorEndOverlap);
+	
 }
 
-void ACTrigger::ActorBeginOverlap(AActor* overlappedActor, AActor* OtherActor)
+void ACMulticastTrigger::ActorBeginOverlap(AActor* overlappedActor, AActor* OtherActor)
 {
-	if (OnBoxLightBeginOverlap.IsBound())
-		OnBoxLightBeginOverlap.Execute();
-
-	if(OnBoxLightRandomBeginOverlap.IsBound())
+	if(OnMultiLightBeginOverlap.IsBound())
 	{
+		int32 index = UKismetMathLibrary::RandomIntegerInRange(0, 2);
+
 		FLinearColor color;
 		color.R = UKismetMathLibrary::RandomFloatInRange(0, 1);
 		color.G = UKismetMathLibrary::RandomFloatInRange(0, 1);
 		color.B = UKismetMathLibrary::RandomFloatInRange(0, 1);
 		color.A = 1.0f;
 
-		FString str = OnBoxLightRandomBeginOverlap.Execute(color);
-		CLog::Log(str);
-		
+		OnMultiLightBeginOverlap.Broadcast(index, color);
 	}
 
 }
 
-void ACTrigger::ActorEndOverlap(AActor* overlappedActor, AActor* OtherActor)
+void ACMulticastTrigger::ActorEndOverlap(AActor* overlappedActor, AActor* OtherActor)
 {
-	if (OnBoxLightEndOverlap.IsBound())
-		OnBoxLightEndOverlap.Execute();
-}
 
+
+}

@@ -4,29 +4,22 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "CTrigger.generated.h"
+#include "CMulticastTrigger.generated.h"
 
-DECLARE_DELEGATE(FBoxLightBeginOverlap);
-DECLARE_DELEGATE(FBoxLightEndOverlap);
-
-DECLARE_DELEGATE_RetVal_OneParam(FString,
-FBoxLightRandomBeginOverlap,
-FLinearColor);
-
+DECLARE_MULTICAST_DELEGATE_TwoParams(FMultiLightBeginOverlap, int32, FLinearColor);
 
 UCLASS()
-class UNREALCPPPROJ_API ACTrigger : public AActor
+class UNREALCPPPROJ_API ACMulticastTrigger : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ACTrigger();
+	ACMulticastTrigger();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	bool is_overlap = false;
 
 private:
 	UPROPERTY(VisibleDefaultsOnly)
@@ -46,7 +39,7 @@ private:
 		void ActorEndOverlap(AActor* overlappedActor, AActor* OtherActor);
 
 public:
-	FBoxLightBeginOverlap		OnBoxLightBeginOverlap;
-	FBoxLightEndOverlap			OnBoxLightEndOverlap;
-	FBoxLightRandomBeginOverlap OnBoxLightRandomBeginOverlap;
+	FMultiLightBeginOverlap		OnMultiLightBeginOverlap;
+
+
 };

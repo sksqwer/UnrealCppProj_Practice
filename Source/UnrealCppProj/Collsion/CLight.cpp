@@ -13,6 +13,7 @@ ACLight::ACLight()
 {
 	CHelpers::CreateComponent<USceneComponent>(this, &Scene, "Scene");
 	CHelpers::CreateComponent<UPointLightComponent>(this, &Light, "Light", Scene);
+	CHelpers::CreateComponent<UPointLightComponent>(this, &Light2, "Light2", Scene);
 	CHelpers::CreateComponent<UTextRenderComponent>(this, &Text, "Text", Scene);
 
 	
@@ -26,6 +27,11 @@ ACLight::ACLight()
 	Light->Intensity = 1e+5f;
 	Light->AttenuationRadius = 2000;
 	Light->LightColor = FColor(255, 128, 50);
+
+	Light2->SetRelativeLocation(FVector(0, -1200, 0));
+	Light2->Intensity = 1e+5f;
+	Light2->AttenuationRadius = 2000;
+	Light2->LightColor = FColor(255, 128, 50);
 }
 
 // Called when the game starts or when spawned
@@ -33,6 +39,7 @@ void ACLight::BeginPlay()
 {
 	Super::BeginPlay();
 	Light->SetVisibility(false);
+	Light2->SetVisibility(false);
 
 	TArray<AActor*> actors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ACTrigger::StaticClass(), actors);
@@ -42,6 +49,7 @@ void ACLight::BeginPlay()
 	ACTrigger* trigger = Cast<ACTrigger>(actors[0]);
 	trigger->OnBoxLightBeginOverlap.BindUFunction(this, "OnLight");
 	trigger->OnBoxLightEndOverlap.BindUFunction(this, "OffLight");
+	trigger->OnBoxLightRandomBeginOverlap.BindUFunction(this, "OnRandomLight");
 
 
 }
@@ -54,4 +62,12 @@ void ACLight::OnLight()
 void ACLight::OffLight()
 {
 	Light->SetVisibility(false);
+	Light2->SetVisibility(false);
+}
+
+FString ACLight::OnRandomLight(FLinearColor Incolor)
+{
+	Light2->SetVisibility(true);
+	Light2->SetLightColor(Incolor);
+	return Incolor.ToString();
 }
