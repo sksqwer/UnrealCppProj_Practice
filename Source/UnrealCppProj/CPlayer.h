@@ -41,4 +41,8 @@ private:
 
 	void OnRunning();
 	void OffRunning();
+
+private:
+	class UMaterialInstanceDynamic* BodyMaterial;
+	class UMaterialInstanceDynamic* LogoMaterial;
 };

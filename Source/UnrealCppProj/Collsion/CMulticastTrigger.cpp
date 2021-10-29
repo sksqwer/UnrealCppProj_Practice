@@ -34,7 +34,8 @@ void ACMulticastTrigger::BeginPlay()
 
 	OnActorBeginOverlap.AddDynamic(this, &ACMulticastTrigger::ActorBeginOverlap);
 	OnActorEndOverlap.AddDynamic(this, &ACMulticastTrigger::ActorEndOverlap);
-	
+
+
 }
 
 void ACMulticastTrigger::ActorBeginOverlap(AActor* overlappedActor, AActor* OtherActor)

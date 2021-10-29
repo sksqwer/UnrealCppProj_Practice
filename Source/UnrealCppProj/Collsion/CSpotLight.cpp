@@ -37,6 +37,8 @@ ACSpotLight::ACSpotLight()
 
 
 	}
+	
+
 
 }
 
@@ -52,6 +54,11 @@ void ACSpotLight::BeginPlay()
 	CHelpers::FindActor<ACMulticastTrigger>(GetWorld(), triggers);
 	triggers[0]->OnMultiLightBeginOverlap.AddUFunction(this, "OnMyColor");
 
+	if (triggers[0]->OnMultiLightBeginOverlap.IsBound())
+	{
+		CLog::Log("Conneted !! ~~~~");
+		triggers[0]->OnMultiLightBeginOverlap.Broadcast(0, FLinearColor(0, 0, 1));
+	}
 }
 
 void ACSpotLight::OnMyColor(int32 InIndex, FLinearColor InColor)
