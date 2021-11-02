@@ -45,4 +45,8 @@ private:
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class UMaterialInstanceDynamic* LogoMaterial;
+
+public:
+	UFUNCTION(BlueprintCallable)
+		void ChangeColor(FLinearColor InColor);
 };
