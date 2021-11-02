@@ -49,4 +49,5 @@ private:
 public:
 	UFUNCTION(BlueprintCallable)
 		void ChangeColor(FLinearColor InColor);
+
 };

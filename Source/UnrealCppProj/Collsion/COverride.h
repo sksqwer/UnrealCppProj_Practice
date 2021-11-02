@@ -32,12 +32,17 @@ private:
 
 	UFUNCTION()
 		void ActorEndOverlap(AActor* overlappedActor, AActor* OtherActor);
-protected:
-	UFUNCTION(BlueprintImplementableEvent)
-		void ChangeColorRed();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent)
+		void ChangeColorRed();
+
+	UFUNCTION(BlueprintNativeEvent)
+		void ChangeColorWhite();
+	void ChangeColorWhite_Implementation();
 };

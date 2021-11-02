@@ -4,6 +4,7 @@
 #include "Components/TextRenderComponent.h"
 #include "Kismet/KismetArrayLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "CPlayer.h"
 
 ACOverride::ACOverride()
 {
@@ -43,6 +44,11 @@ void ACOverride::ActorBeginOverlap(AActor* overlappedActor, AActor* OtherActor)
 
 void ACOverride::ActorEndOverlap(AActor* overlappedActor, AActor* OtherActor)
 {
+	ChangeColorWhite();
+}
 
-
+void ACOverride::ChangeColorWhite_Implementation()
+{
+	ACPlayer* player = Cast<ACPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	player->ChangeColor(FLinearColor(0, 0, 1));
 }

@@ -138,4 +138,3 @@ void ACPlayer::ChangeColor(FLinearColor InColor)
 	LogoMaterial->SetVectorParameterValue("BodyColor", InColor);
 }
 
-
