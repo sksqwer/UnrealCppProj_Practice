@@ -11,7 +11,7 @@ public:
 		verifyf(asset.Succeeded(), L"asset.Succeeeded()");
 		*outObject = asset.Object;
 	}
-
+	
 	template<typename T> static void GetAssetDynamic(T** outObject, FString inPath)
 	{
 		T* obj = Cast<T>(StaticLoadObject(T::StaticClass(), NULL, *inPath));

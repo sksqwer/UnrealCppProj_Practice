@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "CMulticastTrigger.h"
 #include "global.h"
 #include "Components/BoxComponent.h"
 #include "Components/TextRenderComponent.h"
-#include "CMulticastTrigger.h"
 #include "Kismet/KismetArrayLibrary.h"
 #include "Kismet/KismetMathLibrary.h"
 

@@ -1,10 +1,11 @@
+
+#include "CBox.h"
 #include "global.h"
 #include "Components/TextRenderComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "CMulticastTrigger.h"
-#include "CBox.h"
 
 #include "Engine/StaticMeshSocket.h"
 

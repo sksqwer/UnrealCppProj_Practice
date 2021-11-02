@@ -58,11 +58,11 @@ void ACPlayer::BeginPlay()
 	// : Material
 	UMaterialInstanceConstant* bodyMaterial;
 	CHelpers::GetAssetDynamic<UMaterialInstanceConstant>(&bodyMaterial,
-		"MaterialInstanceConstant'/Game/Materials/M_UE4Man_Body_Inst.M_UE4Man_Body_Inst'");
+		"MaterialInstanceConstant'/Game/Material/M_UE4Man_Body_Inst.M_UE4Man_Body_Inst'");
 
 	UMaterialInstanceConstant* logoMaterial;
 	CHelpers::GetAssetDynamic<UMaterialInstanceConstant>(&logoMaterial,
-		"MaterialInstanceConstant'/Game/Materials/M_UE4Man_ChestLogo_Inst.M_UE4Man_ChestLogo_Inst'");
+		"MaterialInstanceConstant'/Game/Material/M_UE4Man_ChestLogo_Inst.M_UE4Man_ChestLogo_Inst'");
 
 	BodyMaterial = UMaterialInstanceDynamic::Create(bodyMaterial, this);
 	LogoMaterial = UMaterialInstanceDynamic::Create(logoMaterial, this);

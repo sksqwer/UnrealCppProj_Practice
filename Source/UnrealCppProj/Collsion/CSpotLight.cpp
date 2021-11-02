@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "global.h"	
 #include "CSpotLight.h"
+#include "global.h"	
 #include "CMulticastTrigger.h"
 #include "Components/TextRenderComponent.h"
 #include "Components/SpotLightComponent.h"
