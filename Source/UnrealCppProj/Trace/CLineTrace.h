@@ -36,4 +36,12 @@ private:
 public:
 	UPROPERTY(BlueprintAssignable)
 		FTraceResult OnTraceResult;
+
+protected:
+	UFUNCTION(BlueprintCallable)
+		void RestoreColor(class ACPlayer* InPlayer);
+
+private:
+	UFUNCTION()
+		void StartJump(class AActor* InActor, FLinearColor InColor);
 };
