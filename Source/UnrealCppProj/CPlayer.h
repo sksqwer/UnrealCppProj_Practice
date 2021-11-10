@@ -42,6 +42,8 @@ private:
 	void OnRunning();
 	void OffRunning();
 
+	void OnRifle();
+
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class UMaterialInstanceDynamic* LogoMaterial;
@@ -49,5 +51,9 @@ private:
 public:
 	UFUNCTION(BlueprintCallable)
 		void ChangeColor(FLinearColor InColor);
+
+private:
+	class ACRifle* Rifle;
+
 
 };

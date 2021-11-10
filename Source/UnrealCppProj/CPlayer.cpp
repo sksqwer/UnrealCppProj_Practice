@@ -9,6 +9,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
 #include "Materials/MaterialInstanceDynamic.h"
+#include "CRifle.h"
 
 // Sets default values
 // reference
@@ -70,6 +71,8 @@ void ACPlayer::BeginPlay()
 	GetMesh()->SetMaterial(0, BodyMaterial);
 	GetMesh()->SetMaterial(1, LogoMaterial);
 
+	//rifle
+	Rifle = ACRifle::Spawn(GetWorld(), this);
 
 
 
@@ -94,6 +97,8 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis("VerticalLook", this, &ACPlayer::OnVerticalLook);
 	PlayerInputComponent->BindAction("Running", EInputEvent::IE_Pressed, this, &ACPlayer::OnRunning);
 	PlayerInputComponent->BindAction("Running", EInputEvent::IE_Released, this, &ACPlayer::OffRunning);
+	PlayerInputComponent->BindAction("Rifle", EInputEvent::IE_Pressed, this, &ACPlayer::OnRifle);
+
 }
 
 void ACPlayer::OnMoveForward(float Axis)
@@ -130,6 +135,19 @@ void ACPlayer::OnRunning()
 void ACPlayer::OffRunning()
 {
 	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
+}
+
+void ACPlayer::OnRifle()
+{
+	if(Rifle->GetEquipped())
+	{
+		Rifle->Unequip();
+	}
+	else
+	{
+		Rifle->Equip();
+	}
+	
 }
 
 void ACPlayer::ChangeColor(FLinearColor InColor)
