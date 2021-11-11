@@ -51,11 +51,11 @@ public:
 	FORCEINLINE bool GetEquipping() { return bEquipping; }
 
 	void Equip();
-	void Being_Equip();
+	void Begin_Equip();
 	void End_Equip();
 	
 	void Unequip();
-	void Being_Unequip();
+	void Begin_Unequip();
 	void End_Unequip();
 
 };

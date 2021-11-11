@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "IRifle.h"
 #include "CPlayer.generated.h"
 
+
 UCLASS()
-class UNREALCPPPROJ_API ACPlayer : public ACharacter
+class UNREALCPPPROJ_API ACPlayer : public ACharacter, public IIRifle
 {
 	GENERATED_BODY()
 
@@ -55,5 +57,7 @@ public:
 private:
 	class ACRifle* Rifle;
 
+public:
+	FORCEINLINE class ACRifle* GetRifle() override { return Rifle; }
 
 };

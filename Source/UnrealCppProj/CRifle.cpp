@@ -57,7 +57,7 @@ void ACRifle::Equip()
 	OwnerCharacter->PlayAnimMontage(GrabMontage);
 }
 
-void ACRifle::Being_Equip()
+void ACRifle::Begin_Equip()
 {
 	bEquipped = true;
 	AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true),
@@ -78,7 +78,7 @@ void ACRifle::Unequip()
 	OwnerCharacter->PlayAnimMontage(UnGrabMontage);
 }
 
-void ACRifle::Being_Unequip()
+void ACRifle::Begin_Unequip()
 {
 	bEquipped = false;
 	AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true),

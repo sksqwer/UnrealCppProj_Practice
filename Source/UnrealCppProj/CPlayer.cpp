@@ -67,7 +67,7 @@ void ACPlayer::BeginPlay()
 
 	BodyMaterial = UMaterialInstanceDynamic::Create(bodyMaterial, this);
 	LogoMaterial = UMaterialInstanceDynamic::Create(logoMaterial, this);
-
+	
 	GetMesh()->SetMaterial(0, BodyMaterial);
 	GetMesh()->SetMaterial(1, LogoMaterial);
 
