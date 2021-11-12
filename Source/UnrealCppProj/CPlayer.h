@@ -46,6 +46,9 @@ private:
 
 	void OnRifle();
 
+	void OnAim();
+	void OffAim();
+
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class UMaterialInstanceDynamic* LogoMaterial;
