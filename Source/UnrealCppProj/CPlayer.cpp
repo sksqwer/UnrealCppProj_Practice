@@ -28,11 +28,9 @@ ACPlayer::ACPlayer()
 	CHelpers::CreateComponent<USpringArmComponent>(this, &SpringArm, "SpringArm", GetCapsuleComponent());
 	CHelpers::CreateComponent<UCameraComponent>(this, &Camera, "Camera", SpringArm);
 	
-
 	bUseControllerRotationYaw = false;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 	GetCharacterMovement()->MaxWalkSpeed = 400.0f;
-
 
 	USkeletalMesh* mesh;
 	CHelpers::GetAsset<USkeletalMesh>(&mesh, "SkeletalMesh'/Game/Character/Mesh/SK_Mannequin.SK_Mannequin'");
@@ -165,7 +163,9 @@ void ACPlayer::OnAim()
 
 	SpringArm->TargetArmLength = 100.0f;
 	SpringArm->SocketOffset = FVector(0.0f, 30.0f, 10.0f);
-	Camera->FieldOfView = 40.0f;
+	//Camera->FieldOfView = 40.0f;
+
+	OnZoomIn();
 }
 
 void ACPlayer::OffAim()
@@ -178,7 +178,9 @@ void ACPlayer::OffAim()
 
 	SpringArm->TargetArmLength = 200.0f;
 	SpringArm->SocketOffset = FVector(0.0f, 60.0f, 0.0f);
-	Camera->FieldOfView = 90.0f;
+	//Camera->FieldOfView = 90.0f;
+
+	OnZoomOut();
 
 }
 

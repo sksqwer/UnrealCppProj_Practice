@@ -19,6 +19,12 @@ protected:
 		float Speed;
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
+		float Direction;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
+		bool bAiming;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		bool bEquipped;
 
 public:
