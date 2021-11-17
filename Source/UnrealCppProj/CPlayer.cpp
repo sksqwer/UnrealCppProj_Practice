@@ -166,6 +166,7 @@ void ACPlayer::OnAim()
 	//Camera->FieldOfView = 40.0f;
 
 	OnZoomIn();
+	Rifle->Begin_Aiming();
 }
 
 void ACPlayer::OffAim()
@@ -181,6 +182,7 @@ void ACPlayer::OffAim()
 	//Camera->FieldOfView = 90.0f;
 
 	OnZoomOut();
+	Rifle->End_Aiming();
 
 }
 

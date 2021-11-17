@@ -27,6 +27,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
 		bool bEquipped;
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "Animation")
+		float Pitch;
+
 public:
 	virtual void NativeBeginPlay() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
