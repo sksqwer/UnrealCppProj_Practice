@@ -32,6 +32,10 @@ private :
 	UPROPERTY(VisibleDefaultsOnly)
 		class USpringArmComponent* SpringArm;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Widget")
+		TSubclassOf<class UCUserWidget_CrossHair> CrossHairClass;
+
+
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
 		class UCameraComponent* Camera;
@@ -54,6 +58,7 @@ private:
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class UMaterialInstanceDynamic* LogoMaterial;
+	class UCUserWidget_CrossHair* CrossHair;
 
 public:
 	UFUNCTION(BlueprintCallable)

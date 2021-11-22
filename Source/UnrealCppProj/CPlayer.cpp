@@ -10,6 +10,7 @@
 #include "Materials/MaterialInstanceConstant.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "CRifle.h"
+#include "Widget/CUserWidget_CrossHair.h"
 
 // Sets default values
 // reference
@@ -48,6 +49,8 @@ ACPlayer::ACPlayer()
 	SpringArm->bUsePawnControlRotation = true;
 	SpringArm->SocketOffset = FVector(0.0f, 60.0f, 0.0f);
 
+	CHelpers::GetClass<UCUserWidget_CrossHair>(&CrossHairClass, "WidgetBlueprint'/Game/Widgets/WB_CrossHair.WB_CrossHair_C'");
+
 }
 
 // Called when the game starts or when spawned
@@ -72,6 +75,12 @@ void ACPlayer::BeginPlay()
 
 	//rifle
 	Rifle = ACRifle::Spawn(GetWorld(), this);
+
+	CrossHair = CreateWidget<UCUserWidget_CrossHair, APlayerController>
+		(GetController<APlayerController>(), CrossHairClass);
+	CrossHair->AddToViewport();
+	CrossHair->SetVisibility(ESlateVisibility::Hidden);
+
 
 	//start rifle equip
 	OnRifle();
@@ -167,6 +176,8 @@ void ACPlayer::OnAim()
 
 	OnZoomIn();
 	Rifle->Begin_Aiming();
+
+	CrossHair->SetVisibility(ESlateVisibility::Visible);
 }
 
 void ACPlayer::OffAim()
@@ -184,6 +195,8 @@ void ACPlayer::OffAim()
 	OnZoomOut();
 	Rifle->End_Aiming();
 
+
+	CrossHair->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void ACPlayer::ChangeColor(FLinearColor InColor)
