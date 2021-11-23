@@ -16,6 +16,7 @@ class UNREALCPPPROJ_API ACPlayer : public ACharacter, public IIRifle
 public:
 	// Sets default values for this character's properties
 	ACPlayer();
+	void GetLocationAndDirection(FVector& outStart, FVector& OutEnd, FVector& OutDirection) override;
 
 protected:
 	// Called when the game starts or when spawned
@@ -55,6 +56,9 @@ private:
 	void OnAim();
 	void OffAim();
 
+	void OnFire();
+	void OffFire();
+
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class UMaterialInstanceDynamic* LogoMaterial;
@@ -76,5 +80,9 @@ private:
 
 public:
 	FORCEINLINE class ACRifle* GetRifle() override { return Rifle; }
+
+public:
+	void OnFocus() override;
+	void OffFocus() override;
 
 };
