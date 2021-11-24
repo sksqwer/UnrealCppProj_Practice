@@ -24,7 +24,8 @@ ACRifle::ACRifle()
 	Mesh->SetSkeletalMesh(mesh);
 
 	CHelpers::GetAsset<UAnimMontage>(&GrabMontage, "AnimMontage'/Game/Character/Montages/Rifle_Grab_Montage.Rifle_Grab_Montage'");
-	CHelpers::GetAsset<UAnimMontage>(&UnGrabMontage, "AnimMontage'/Game/Character/Montages/Rifle_UnGrab_Montag.Rifle_UnGrab_Montag'");
+	CHelpers::GetAsset<UAnimMontage>(&UnGrabMontage, "AnimMontage'/Game/Character/Montages/Rifle_UnGrab_Montage.Rifle_UnGrab_Montage'");
+	CHelpers::GetAsset<UAnimMontage>(&FireMontage, "AnimMontage'/Game/Character/Montages/Rifle_Fire_Montage.Rifle_Fire_Montage'");
 
 
 }
@@ -161,7 +162,11 @@ void ACRifle::Firing()
 	FVector start, end, direction;
 	rifle->GetLocationAndDirection(start, end, direction);
 
+	OwnerCharacter->PlayAnimMontage(FireMontage);
 
+	ACPlayer* player = Cast<ACPlayer>(OwnerCharacter);
+	if (!!player)
+		player->PlayCameraShake();
 
 	FCollisionQueryParams Params;
 	Params.AddIgnoredActor(this);

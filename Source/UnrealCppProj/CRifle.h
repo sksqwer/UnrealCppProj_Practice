@@ -25,6 +25,9 @@ private:
 	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
 		class UAnimMontage* UnGrabMontage;
 
+	UPROPERTY(VisibleDefaultsOnly, Category = "Rifle")
+		class UAnimMontage* FireMontage;
+
 
 public:
 	static ACRifle* Spawn(class UWorld* InWorld, class ACharacter* InOnwer);

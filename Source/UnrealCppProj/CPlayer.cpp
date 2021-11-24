@@ -12,6 +12,7 @@
 #include "CRifle.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Widget/CUserWidget_CrossHair.h"
+#include "Camera/CameraShake.h"
 
 // Sets default values
 // reference
@@ -51,6 +52,7 @@ ACPlayer::ACPlayer()
 	SpringArm->SocketOffset = FVector(0.0f, 60.0f, 0.0f);
 
 	CHelpers::GetClass<UCUserWidget_CrossHair>(&CrossHairClass, "WidgetBlueprint'/Game/Widgets/WB_CrossHair.WB_CrossHair_C'");
+	CHelpers::GetClass<UCameraShake>(&CameraShakeClass, "Blueprint'/Game/BP_CameraShake.BP_CameraShake_C'");
 
 }
 
@@ -245,5 +247,10 @@ void ACPlayer::OnFocus()
 void ACPlayer::OffFocus()
 {
 	CrossHair->OffFocus();
+}
+
+void ACPlayer::PlayCameraShake()
+{
+	GetController<APlayerController>()->PlayerCameraManager->PlayCameraShake(CameraShakeClass);
 }
 
