@@ -63,7 +63,7 @@ void ACPlayer::GetLocationAndDirection(FVector& outStart, FVector& OutEnd, FVect
 	FTransform Transform = Camera->GetComponentToWorld();
 	FVector cameraLocation = Transform.GetLocation();
 
-	outStart = cameraLocation + OutDirection;
+	outStart = cameraLocation + OutDirection * 150.0f;
 
 	FVector conDirection = UKismetMathLibrary::RandomUnitVectorInEllipticalConeInDegrees(OutDirection, 0.2f, 0.3f);
 

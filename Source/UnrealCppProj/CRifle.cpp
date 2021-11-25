@@ -5,6 +5,9 @@
 #include "CPlayer.h"
 #include "Animation/AnimMontage.h"
 #include "Engine/StaticMeshActor.h"
+#include "particles/ParticleSystem.h"
+#include "Sound/SoundCue.h"
+#include "CBullet.h"
 
 ACRifle* ACRifle::Spawn(UWorld* InWorld, ACharacter* InOwner)
 {
@@ -26,6 +29,11 @@ ACRifle::ACRifle()
 	CHelpers::GetAsset<UAnimMontage>(&GrabMontage, "AnimMontage'/Game/Character/Montages/Rifle_Grab_Montage.Rifle_Grab_Montage'");
 	CHelpers::GetAsset<UAnimMontage>(&UnGrabMontage, "AnimMontage'/Game/Character/Montages/Rifle_UnGrab_Montage.Rifle_UnGrab_Montage'");
 	CHelpers::GetAsset<UAnimMontage>(&FireMontage, "AnimMontage'/Game/Character/Montages/Rifle_Fire_Montage.Rifle_Fire_Montage'");
+	CHelpers::GetAsset<UParticleSystem>(&FlashParticle, "ParticleSystem'/Game/Particles_Rifle/Particles/VFX_Muzzleflash.VFX_Muzzleflash'");
+	CHelpers::GetAsset<UParticleSystem>(&EjectParticle, "ParticleSystem'/Game/Particles_Rifle/Particles/VFX_Eject_bullet.VFX_Eject_bullet'");
+	CHelpers::GetAsset<USoundCue>(&FireSoundCue, "SoundCue'/Game/Sounds/S_RifleShoot_Cue.S_RifleShoot_Cue'");
+	CHelpers::GetClass<ACBullet>(&BulletClass, "Blueprint'/Game/BP_CBullet.BP_CBullet_C'");
+	CHelpers::GetAsset<UParticleSystem>(&ImpactParticle, "ParticleSystem'/Game/Particles_Rifle/Particles/VFX_Impact_Default.VFX_Impact_Default'");
 
 
 }
@@ -168,6 +176,17 @@ void ACRifle::Firing()
 	if (!!player)
 		player->PlayCameraShake();
 
+	UGameplayStatics::SpawnEmitterAttached(FlashParticle, Mesh, "MuzzleFlash",
+		FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
+
+	UGameplayStatics::SpawnEmitterAttached(EjectParticle, Mesh, "EjectBullet",
+		FVector::ZeroVector, FRotator::ZeroRotator, EAttachLocation::KeepRelativeOffset);
+
+	FVector muzzleLocation = Mesh->GetSocketLocation("MuzzleFlash");
+	UGameplayStatics::PlaySoundAtLocation(GetWorld(), FireSoundCue, muzzleLocation);
+
+
+
 	FCollisionQueryParams Params;
 	Params.AddIgnoredActor(this);
 	Params.AddIgnoredActor(OwnerCharacter);
@@ -176,6 +195,10 @@ void ACRifle::Firing()
 	if (GetWorld()->LineTraceSingleByChannel(hitResult, start, end,
 		ECollisionChannel::ECC_WorldDynamic, Params))
 	{
+		direction = hitResult.Location - muzzleLocation;
+		if (!!BulletClass)
+			GetWorld()->SpawnActor<ACBullet>(BulletClass, muzzleLocation, direction.Rotation());
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactParticle, hitResult.Location);
 		AStaticMeshActor* staticMeshActor = Cast<AStaticMeshActor>(
 			hitResult.GetActor());
 		if (!!staticMeshActor)
@@ -191,6 +214,7 @@ void ACRifle::Firing()
 						OwnerCharacter->GetActorLocation();
 					direction.Normalize();
 					meshComponent->AddImpulseAtLocation(direction * meshComponent->GetMass() * 100, OwnerCharacter->GetActorLocation());
+
 
 					//rifle->OnFocus();
 
